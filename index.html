@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>成語四格漫畫集</title>
+<title>知識漫畫集</title>
 <style>
   :root{
     --bg:#fafafa; --fg:#1a1a1a; --muted:#666;
@@ -14,297 +14,40 @@
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC",
       "Microsoft JhengHei",Roboto,Helvetica,Arial,sans-serif;
     line-height:1.5}
-  header{padding:24px 16px 12px;max-width:1280px;margin:0 auto;
-    display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-  header h1{margin:0;font-size:20px;font-weight:600}
-  header .count{color:var(--muted);font-size:14px}
-  header .spacer{flex:1}
-  header input[type=search]{padding:8px 12px;border:1px solid var(--border);
-    border-radius:6px;font-size:14px;width:240px;max-width:100%;
-    background:#fff;color:var(--fg)}
-  header input[type=search]:focus{outline:none;border-color:var(--accent)}
-  .size-group{display:inline-flex;border:1px solid var(--border);border-radius:6px;overflow:hidden}
-  .size-group button{background:#fff;border:0;border-left:1px solid var(--border);
-    padding:8px 14px;font-size:14px;cursor:pointer;color:var(--fg);
-    font-family:inherit;line-height:1.2}
-  .size-group button:first-child{border-left:0}
-  .size-group button:hover:not(.active){background:#f3f4f6}
-  .size-group button.active{background:var(--accent);color:#fff}
-  .pager{padding:0 16px 16px;max-width:1280px;margin:0 auto;
-    display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
-  .pager a,.pager span{padding:6px 12px;border:1px solid var(--border);border-radius:4px;
-    text-decoration:none;color:var(--fg);font-size:14px;min-width:36px;text-align:center}
-  .pager a:hover{background:#f3f4f6;border-color:var(--accent);color:var(--accent)}
-  .pager .current{background:var(--accent);color:#fff;border-color:var(--accent)}
-  .pager .disabled{color:var(--muted);cursor:default;pointer-events:none;opacity:.5}
-  .pager .info{color:var(--muted);border:0;font-size:13px;min-width:auto}
-  main{max-width:1280px;margin:0 auto;padding:0 16px 48px}
-  /* size: medium (default) */
-  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-  .grid.size-small{grid-template-columns:repeat(8,1fr);gap:8px}
-  .grid.size-small .card .meta{padding:6px 8px}
-  .grid.size-small .card .title{font-size:12px}
-  .grid.size-large{grid-template-columns:1fr;gap:24px;max-width:1100px;margin:0 auto}
-  .grid.size-large .card{flex-direction:column-reverse}
-  .grid.size-large .card .thumb{aspect-ratio:auto;max-height:80vh;background:#000}
-  .grid.size-large .card .thumb img{object-fit:contain}
-  .grid.size-large .card .meta{border-top:0;border-bottom:1px solid var(--border);padding:12px 16px}
-  .grid.size-large .card .title{font-size:18px;white-space:normal}
-  .grid.size-large .card a.open{font-size:13px;padding:5px 12px}
-
-  @media(max-width:1100px){.grid{grid-template-columns:repeat(3,1fr)}}
-  @media(max-width:900px){.grid.size-small{grid-template-columns:repeat(6,1fr)}.grid{grid-template-columns:repeat(3,1fr)}}
-  @media(max-width:640px){.grid.size-small{grid-template-columns:repeat(4,1fr)}.grid{grid-template-columns:repeat(2,1fr)}}
-  @media(max-width:380px){.grid{grid-template-columns:1fr}}
-  .card{background:var(--card);border:1px solid var(--border);border-radius:8px;
-    overflow:hidden;display:flex;flex-direction:column}
-  .card .thumb{aspect-ratio:1/1;background:#f0f0f0;display:flex;
-    align-items:center;justify-content:center;cursor:pointer;
-    overflow:hidden}
-  .card .thumb img{width:100%;height:100%;object-fit:contain;display:block}
-  .card .meta{padding:10px 12px;display:flex;align-items:center;
-    justify-content:space-between;gap:8px;border-top:1px solid var(--border)}
-  .card .title{font-size:14px;font-weight:500;overflow:hidden;
-    text-overflow:ellipsis;white-space:nowrap}
-  .card a.open{flex-shrink:0;color:var(--muted);text-decoration:none;
-    font-size:12px;border:1px solid var(--border);padding:3px 8px;
-    border-radius:4px}
-  .card a.open:hover{color:var(--accent);border-color:var(--accent)}
-  .empty{padding:40px;text-align:center;color:var(--muted)}
-  .err{color:#dc2626;font-size:12px;padding:8px 12px}
-
-  /* lightbox */
-  .lb{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;
-    align-items:center;justify-content:center;z-index:100;padding:16px}
-  .lb.open{display:flex}
-  .lb img{max-width:100%;max-height:100%;object-fit:contain}
-  .lb .close{position:absolute;top:12px;right:16px;background:transparent;
-    border:0;color:#fff;font-size:32px;cursor:pointer;line-height:1;
-    padding:8px 12px}
-  .lb .caption{position:absolute;bottom:12px;left:0;right:0;text-align:center;
-    color:#ddd;font-size:14px}
+  main{max-width:760px;margin:0 auto;padding:64px 24px}
+  h1{margin:0 0 8px;font-size:28px;font-weight:600}
+  p.lead{margin:0 0 40px;color:var(--muted);font-size:15px}
+  .grid{display:grid;grid-template-columns:1fr;gap:12px}
+  a.card{display:flex;align-items:center;gap:16px;padding:20px 24px;
+    background:var(--card);border:1px solid var(--border);border-radius:8px;
+    text-decoration:none;color:var(--fg);transition:border-color .15s}
+  a.card:hover{border-color:var(--accent)}
+  a.card .emoji{font-size:32px;line-height:1}
+  a.card .body{flex:1;min-width:0}
+  a.card .title{font-size:17px;font-weight:500;margin-bottom:4px}
+  a.card .desc{color:var(--muted);font-size:13px}
+  a.card .arrow{color:var(--muted);font-size:18px}
+  a.card:hover .arrow{color:var(--accent)}
+  footer{margin-top:48px;color:var(--muted);font-size:12px;text-align:center}
 </style>
 </head>
 <body>
-<header>
-  <h1>成語四格漫畫集</h1>
-  <span class="count" id="count"></span>
-  <span class="spacer"></span>
-  <div class="size-group" id="size-group" role="group" aria-label="縮圖大小">
-    <button type="button" data-size="small" aria-label="小">小</button>
-    <button type="button" data-size="medium" aria-label="中">中</button>
-    <button type="button" data-size="large" aria-label="大">大</button>
-  </div>
-  <input type="search" id="q" placeholder="搜尋成語…" autocomplete="off">
-</header>
-<nav class="pager" id="pager" aria-label="頁碼導覽"></nav>
 <main>
-  <div class="grid" id="grid"></div>
-  <div class="empty" id="empty" hidden>沒有符合的成語。</div>
+  <h1>知識漫畫集</h1>
+  <p class="lead">用漫畫學知識 — 選擇一個科目開始。</p>
+
+  <div class="grid">
+    <a class="card" href="comics/proverb/">
+      <span class="emoji">📚</span>
+      <div class="body">
+        <div class="title">成語四格漫畫</div>
+        <div class="desc">把中文成語做成四格漫畫,涵蓋解釋、句型、同義詞、反義詞。</div>
+      </div>
+      <span class="arrow">›</span>
+    </a>
+  </div>
+
+  <footer>由 k_gen 自動產生 · 2026</footer>
 </main>
-
-<nav class="pager" id="pager-bottom" aria-label="頁碼導覽"></nav>
-
-<div class="lb" id="lb" role="dialog" aria-modal="true">
-  <button class="close" aria-label="關閉">×</button>
-  <img id="lb-img" alt="">
-  <div class="caption" id="lb-cap"></div>
-</div>
-
-<script>
-const FILES = [
-  "自鳴得意",
-  "自食惡果",
-  "自食其果",
-  "自食其力",
-  "自顧不暇",
-  "自知之明",
-  "自相矛盾",
-  "自甘墮落",
-  "自欺欺人",
-  "自暴自棄",
-  "自投羅網",
-  "自慚形穢",
-  "自怨自艾",
-  "自圓其說",
-  "自命不凡",
-  "自吹自擂",
-  "自取其辱",
-  "自力更生",
-  "自以為是",
-  "監守自盜",
-  "畫地自限",
-  "玩火自焚",
-  "泰然自若",
-  "毛遂自薦",
-  "望子成龍",
-  "故步自封",
-  "捫心自問",
-  "庸人自擾",
-  "孤芳自賞",
-  "妄自菲薄",
-  "如人飲水冷暖自知",
-  "天助自助",
-  "夜郎自大",
-  "咎由自取",
-  "各人自掃門前雪休管他人瓦上霜",
-  "反躬自省",
-  "剛愎自用",
-  "公理自在人心",
-  "作繭自縛",
-  "作法自斃",
-  "不自量力",
-];
-const BASE = "https://raw.githubusercontent.com/kilroy-utb/knowledge_base/main/comics/";
-const PER_PAGE = 20;
-
-const grid = document.getElementById("grid");
-const empty = document.getElementById("empty");
-const countEl = document.getElementById("count");
-const q = document.getElementById("q");
-const pagerTop = document.getElementById("pager");
-const pagerBottom = document.getElementById("pager-bottom");
-const lb = document.getElementById("lb");
-const lbImg = document.getElementById("lb-img");
-const lbCap = document.getElementById("lb-cap");
-
-const TOTAL = FILES.length;
-const TOTAL_PAGES = Math.max(1, Math.ceil(TOTAL / PER_PAGE));
-
-function currentPage(){
-  const p = parseInt(new URLSearchParams(location.search).get("page") || "1", 10);
-  if (isNaN(p) || p < 1) return 1;
-  if (p > TOTAL_PAGES) return TOTAL_PAGES;
-  return p;
-}
-
-function pageUrl(n){ return n === 1 ? "?" : ("?page=" + n); }
-
-function renderPager(container, page){
-  const parts = [];
-  if (TOTAL_PAGES <= 1){
-    parts.push(`<span class="info">共 ${TOTAL} 個成語</span>`);
-  } else {
-    parts.push(page > 1
-      ? `<a href="${pageUrl(page-1)}" rel="prev">‹ 上一頁</a>`
-      : `<span class="disabled">‹ 上一頁</span>`);
-    for (let i = 1; i <= TOTAL_PAGES; i++){
-      parts.push(i === page
-        ? `<span class="current">${i}</span>`
-        : `<a href="${pageUrl(i)}">${i}</a>`);
-    }
-    parts.push(page < TOTAL_PAGES
-      ? `<a href="${pageUrl(page+1)}" rel="next">下一頁 ›</a>`
-      : `<span class="disabled">下一頁 ›</span>`);
-  }
-  container.innerHTML = parts.join("");
-}
-
-function buildCards(){
-  const frag = document.createDocumentFragment();
-  for (let i = 0; i < TOTAL; i++){
-    const name = FILES[i];
-    const card = document.createElement("div");
-    card.className = "card";
-    card.dataset.name = name;
-    card.dataset.page = Math.floor(i / PER_PAGE) + 1;
-    card.innerHTML = `
-      <div class="thumb"><img alt="${name}"></div>
-      <div class="meta">
-        <div class="title">${name}</div>
-        <a class="open" href="${BASE + encodeURIComponent(name) + ".png"}" target="_blank" rel="noopener">新分頁</a>
-      </div>`;
-    const img = card.querySelector("img");
-    img.addEventListener("error", () => {
-      card.querySelector(".thumb").innerHTML = `<div class="err">圖片載入失敗</div>`;
-    });
-    card.querySelector(".thumb").addEventListener("click", () => openLB(BASE + encodeURIComponent(name) + ".png", name));
-    frag.appendChild(card);
-  }
-  grid.appendChild(frag);
-}
-
-function applyPage(page){
-  const start = (page - 1) * PER_PAGE;
-  const end = Math.min(start + PER_PAGE, TOTAL);
-  let visible = 0;
-  for (const c of grid.children){
-    const cp = parseInt(c.dataset.page, 10);
-    const onPage = (cp === page);
-    c.style.display = onPage ? "" : "none";
-    if (onPage){
-      const img = c.querySelector("img");
-      if (img && !img.dataset.loaded){
-        img.src = BASE + encodeURIComponent(c.dataset.name) + ".png";
-        img.dataset.loaded = "1";
-      }
-      visible++;
-    }
-  }
-  countEl.textContent = TOTAL_PAGES > 1
-    ? `第 ${page}/${TOTAL_PAGES} 頁 · 共 ${TOTAL} 個成語`
-    : `共 ${TOTAL} 個成語`;
-  renderPager(pagerTop, page);
-  renderPager(pagerBottom, page);
-  document.title = TOTAL_PAGES > 1
-    ? `成語四格漫畫集 — 第 ${page}/${TOTAL_PAGES} 頁`
-    : "成語四格漫畫集";
-}
-
-function filter(v){
-  v = v.trim().toLowerCase();
-  // when searching, ignore pagination — show all matching
-  let n = 0;
-  for (const c of grid.children){
-    const match = !v || c.dataset.name.toLowerCase().includes(v);
-    c.style.display = match ? "" : "none";
-    if (match){
-      const img = c.querySelector("img");
-      if (img && !img.dataset.loaded){
-        img.src = BASE + encodeURIComponent(c.dataset.name) + ".png";
-        img.dataset.loaded = "1";
-      }
-      n++;
-    }
-  }
-  empty.hidden = n > 0;
-  // hide pagers during search
-  pagerTop.style.display = v ? "none" : "";
-  pagerBottom.style.display = v ? "none" : "";
-}
-
-function openLB(url, name){
-  lbImg.src = url;
-  lbImg.alt = name;
-  lbCap.textContent = name;
-  lb.classList.add("open");
-}
-function closeLB(){ lb.classList.remove("open"); lbImg.src = ""; }
-
-q.addEventListener("input", e => filter(e.target.value));
-lb.addEventListener("click", e => { if (e.target === lb) closeLB(); });
-document.querySelector(".lb .close").addEventListener("click", closeLB);
-document.addEventListener("keydown", e => {
-  if (e.key === "Escape" && lb.classList.contains("open")) closeLB();
-});
-
-// size toggle + localStorage
-const sizeBtns = document.querySelectorAll("#size-group button");
-const SIZE_KEY = "kgen-gallery-size";
-function setSize(s){
-  if (!["small","medium","large"].includes(s)) s = "medium";
-  grid.classList.remove("size-small","size-medium","size-large");
-  grid.classList.add("size-" + s);
-  sizeBtns.forEach(b => b.classList.toggle("active", b.dataset.size === s));
-  try { localStorage.setItem(SIZE_KEY, s); } catch(_) {}
-}
-sizeBtns.forEach(b => b.addEventListener("click", () => setSize(b.dataset.size)));
-let savedSize = "medium";
-try { savedSize = localStorage.getItem(SIZE_KEY) || "medium"; } catch(_) {}
-setSize(savedSize);
-
-buildCards();
-applyPage(currentPage());
-</script>
 </body>
 </html>
