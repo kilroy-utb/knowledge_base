@@ -1,32 +1,39 @@
 {
   "topic": "望子成龍",
   "mode": "idiom",
-  "pinyin": "",
-  "meaning_short": "「望子成龍」的釋義",
+  "pinyin": "wàng zǐ chéng lóng",
+  "meaning_short": "父母期望子女出人頭地、成為有成就的人。",
   "panels": [
     {
       "title": "解釋",
-      "scene": "A chibi scene illustrating the meaning of 望子成龍.",
-      "caption": "解釋"
+      "scene": "A chibi dad in a tiny home office, dressed as a cheering coach with a whistle, standing behind his 7-year-old chibi son who is furiously writing calligraphy with a giant brush. The dad's eyes sparkle with stars, sweat drops flying, exaggerated shouting pose with mouth wide open. Bookshelves overflowing with trophies and textbooks. Comic-book action lines radiating from the kid.",
+      "caption": "爸媽恨不得小孩馬上變天才!"
     },
     {
       "title": "句型",
-      "scene": "A modern chibi scene using 望子成龍 in daily life.",
-      "caption": "「望子成龍」用在日常生活。"
+      "scene": "A chibi mom grabbing her elementary-school son's shoulders at the school gate, leaning in intensely. The kid's backpack is overflowing with cram-school books and piano sheets. Speech bubble showing 補習班, 鋼琴, 奧數, 英語. The kid has a tired, blank expression with spiral marks above the head. Other parents in background doing the same.",
+      "caption": "媽媽望子成龍,週末排了八個才藝班!"
     },
     {
       "title": "同義詞",
-      "scene": "Three icon labels for synonyms.",
-      "caption": "同義詞"
+      "scene": "Three chibi parent figures with thought bubbles showing thumbs-up and stars. Icon labels in bright colors: 望女成鳳, 望子成才, 寄予厚望. Comic-book sparkle effects.",
+      "caption": "望女成鳳 / 望子成才 / 寄予厚望"
     },
     {
       "title": "反義詞",
-      "scene": "Two contrast icon labels for antonyms.",
-      "caption": "反義詞"
+      "scene": "Two chibi parents relaxing on a couch eating popcorn while their kid plays freely in a yard with butterflies. Speech bubble showing 放輕鬆, 快樂就好. Soft pastel colors, no stress lines. Contrast with the previous stressful panels.",
+      "caption": "放任自流 / 順其自然"
     }
   ],
-  "synonyms": [],
-  "antonyms": [],
-  "title_banner": "四格漫畫 ─ 望子成龍",
-  "tagline": "今天學一點 📚"
+  "synonyms": [
+    "望女成鳳",
+    "望子成才",
+    "寄予厚望"
+  ],
+  "antonyms": [
+    "放任自流",
+    "順其自然"
+  ],
+  "title_banner": "成語四格漫畫 ─ 望子成龍",
+  "tagline": "今日爸妈的夢想 🎓"
 }
