@@ -23,10 +23,30 @@
     border-radius:6px;font-size:14px;width:240px;max-width:100%;
     background:#fff;color:var(--fg)}
   header input[type=search]:focus{outline:none;border-color:var(--accent)}
+  .size-group{display:inline-flex;border:1px solid var(--border);border-radius:6px;overflow:hidden}
+  .size-group button{background:#fff;border:0;border-left:1px solid var(--border);
+    padding:8px 14px;font-size:14px;cursor:pointer;color:var(--fg);
+    font-family:inherit;line-height:1.2}
+  .size-group button:first-child{border-left:0}
+  .size-group button:hover:not(.active){background:#f3f4f6}
+  .size-group button.active{background:var(--accent);color:#fff}
   main{max-width:1280px;margin:0 auto;padding:0 16px 48px}
+  /* size: medium (default) */
   .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-  @media(max-width:900px){.grid{grid-template-columns:repeat(3,1fr)}}
-  @media(max-width:640px){.grid{grid-template-columns:repeat(2,1fr)}}
+  .grid.size-small{grid-template-columns:repeat(8,1fr);gap:8px}
+  .grid.size-small .card .meta{padding:6px 8px}
+  .grid.size-small .card .title{font-size:12px}
+  .grid.size-large{grid-template-columns:1fr;gap:24px;max-width:1100px;margin:0 auto}
+  .grid.size-large .card{flex-direction:column-reverse}
+  .grid.size-large .card .thumb{aspect-ratio:auto;max-height:80vh;background:#000}
+  .grid.size-large .card .thumb img{object-fit:contain}
+  .grid.size-large .card .meta{border-top:0;border-bottom:1px solid var(--border);padding:12px 16px}
+  .grid.size-large .card .title{font-size:18px;white-space:normal}
+  .grid.size-large .card a.open{font-size:13px;padding:5px 12px}
+
+  @media(max-width:1100px){.grid{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:900px){.grid.size-small{grid-template-columns:repeat(6,1fr)}.grid{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:640px){.grid.size-small{grid-template-columns:repeat(4,1fr)}.grid{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:380px){.grid{grid-template-columns:1fr}}
   .card{background:var(--card);border:1px solid var(--border);border-radius:8px;
     overflow:hidden;display:flex;flex-direction:column}
@@ -62,6 +82,11 @@
   <h1>成語四格漫畫集</h1>
   <span class="count" id="count"></span>
   <span class="spacer"></span>
+  <div class="size-group" id="size-group" role="group" aria-label="縮圖大小">
+    <button type="button" data-size="small" aria-label="小">小</button>
+    <button type="button" data-size="medium" aria-label="中">中</button>
+    <button type="button" data-size="large" aria-label="大">大</button>
+  </div>
   <input type="search" id="q" placeholder="搜尋成語…" autocomplete="off">
 </header>
 <main>
@@ -149,6 +174,21 @@ document.querySelector(".lb .close").addEventListener("click", closeLB);
 document.addEventListener("keydown", e => {
   if (e.key === "Escape" && lb.classList.contains("open")) closeLB();
 });
+
+// size toggle + localStorage
+const sizeBtns = document.querySelectorAll("#size-group button");
+const SIZE_KEY = "kgen-gallery-size";
+function setSize(s){
+  if (!["small","medium","large"].includes(s)) s = "medium";
+  grid.classList.remove("size-small","size-medium","size-large");
+  grid.classList.add("size-" + s);
+  sizeBtns.forEach(b => b.classList.toggle("active", b.dataset.size === s));
+  try { localStorage.setItem(SIZE_KEY, s); } catch(_) {}
+}
+sizeBtns.forEach(b => b.addEventListener("click", () => setSize(b.dataset.size)));
+let savedSize = "medium";
+try { savedSize = localStorage.getItem(SIZE_KEY) || "medium"; } catch(_) {}
+setSize(savedSize);
 
 buildCards();
 </script>
