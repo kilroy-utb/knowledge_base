@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>生物四格漫畫集</title>
+<title>演化與生物分類</title>
 <style>
   :root{
     --bg:#fafafa; --fg:#1a1a1a; --muted:#666;
@@ -87,7 +87,7 @@
 </head>
 <body>
 <header>
-  <h1>生物四格漫畫集</h1>
+  <h1>演化與生物分類</h1>
   <span class="count" id="count"></span>
   <span class="spacer"></span>
   <div class="size-group" id="size-group" role="group" aria-label="縮圖大小">
@@ -212,8 +212,8 @@ function applyPage(page){
   renderPager(pagerTop, page);
   renderPager(pagerBottom, page);
   document.title = TOTAL_PAGES > 1
-    ? `生物四格漫畫集 — 第 ${page}/${TOTAL_PAGES} 頁`
-    : "生物四格漫畫集";
+    ? `演化與生物分類 — 第 ${page}/${TOTAL_PAGES} 頁`
+    : "演化與生物分類";
 }
 
 function filter(v){
