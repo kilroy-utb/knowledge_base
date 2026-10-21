@@ -30,6 +30,33 @@
   .size-group button:first-child{border-left:0}
   .size-group button:hover:not(.active){background:#f3f4f6}
   .size-group button.active{background:var(--accent);color:#fff}
+  /* back-to-hub link (only rendered when __PARENT_URL__ is set) */
+  .back-slot{max-width:1280px;margin:0 auto;padding:16px 16px 0}
+  .back-slot:empty{display:none}
+  .back{display:inline-flex;align-items:center;gap:6px;color:var(--muted);
+    text-decoration:none;font-size:14px;padding:6px 10px;border:1px solid var(--border);
+    border-radius:6px;background:#fff;white-space:nowrap}
+  .back:hover{color:var(--accent);border-color:var(--accent)}
+  /* collapsible chapter navbar */
+  .navbar{max-width:1280px;margin:0 auto;padding:0 16px 8px}
+  .navbar-inner{border:1px solid var(--border);border-radius:8px;background:#fff;
+    overflow:hidden}
+  .navbar-head{display:flex;align-items:center;gap:10px;padding:10px 14px;
+    background:#f8f9fa;border-bottom:1px solid transparent}
+  .navbar-head .navbar-label{font-size:14px;font-weight:500;color:var(--fg)}
+  .navbar-head .spacer{flex:1}
+  .navbar-toggle{border:0;background:transparent;color:var(--muted);cursor:pointer;
+    font-size:13px;padding:4px 8px;border-radius:4px;font-family:inherit}
+  .navbar-toggle:hover{color:var(--accent);background:#eef2ff}
+  .navbar-chevron{display:inline-block;transition:transform .18s;font-size:11px}
+  .navbar.collapsed .navbar-chevron{transform:rotate(-90deg)}
+  .navbar-links{display:flex;flex-wrap:wrap;gap:8px;padding:12px 14px}
+  .navbar.collapsed .navbar-links{display:none}
+  .navbar-links a{font-size:13px;padding:6px 10px;border:1px solid var(--border);
+    border-radius:999px;text-decoration:none;color:var(--fg);background:#fff;
+    white-space:nowrap}
+  .navbar-links a:hover{border-color:var(--accent);color:var(--accent)}
+  .navbar-links a.current{border-color:var(--accent);background:var(--accent);color:#fff}
   .pager{padding:0 16px 16px;max-width:1280px;margin:0 auto;
     display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
   .pager a,.pager span{padding:6px 12px;border:1px solid var(--border);border-radius:4px;
@@ -86,6 +113,7 @@
 </style>
 </head>
 <body>
+<div class="back-slot" id="back-slot"></div>
 <header>
   <h1>成語四格漫畫集</h1>
   <span class="count" id="count"></span>
@@ -97,6 +125,19 @@
   </div>
   <input type="search" id="q" placeholder="搜尋成語…" autocomplete="off">
 </header>
+<div class="navbar collapsed" id="navbar">
+  <div class="navbar-inner">
+    <div class="navbar-head">
+      <span class="navbar-label">章節導覽</span>
+      <span class="spacer"></span>
+      <button type="button" class="navbar-toggle" id="navbar-toggle"
+              aria-expanded="false" aria-controls="navbar-links">
+        <span class="navbar-chevron">▼</span> <span id="navbar-toggle-text">展開</span>
+      </button>
+    </div>
+    <div class="navbar-links" id="navbar-links"></div>
+  </div>
+</div>
 <nav class="pager" id="pager" aria-label="頁碼導覽"></nav>
 <main>
   <div class="grid" id="grid"></div>
@@ -113,6 +154,51 @@
 
 <script>
 const FILES = [
+  "鬼影幢幢",
+  "仰天長嘯",
+  "韶光易逝",
+  "出言不遜",
+  "人謀不臧",
+  "未雨綢繆",
+  "克紹箕裘",
+  "聰明睿智",
+  "熙來攘往",
+  "香消玉殞",
+  "洗滌",
+  "棄如敝屣",
+  "賄賂",
+  "租賃",
+  "炊煙裊裊",
+  "海市蜃樓",
+  "狡兔三窟",
+  "模稜兩可",
+  "睥睨群雄",
+  "青眼相睞",
+  "大雨滂沱",
+  "面有慍色",
+  "不寒而栗",
+  "媲美古人",
+  "以免向隅",
+  "貽笑大方",
+  "草菅人命",
+  "斐然成章",
+  "去蕪存菁",
+  "揠苗助長",
+  "一傅眾咻",
+  "良莠不齊",
+  "如火如荼",
+  "相形見絀",
+  "陷入泥淖",
+  "池水乾涸",
+  "戰功彪炳",
+  "貪婪無比",
+  "婀娜多姿",
+  "偃旗息鼓",
+  "銀貨兩訖",
+  "中流砥柱",
+  "奉為圭臬",
+  "淚眼婆娑",
+  "提綱挈領",
   "童叟無欺",
   "前倨後恭",
   "冥頑不靈",
@@ -464,12 +550,33 @@ function setSize(s){
   grid.classList.remove("size-small","size-medium","size-large");
   grid.classList.add("size-" + s);
   sizeBtns.forEach(b => b.classList.toggle("active", b.dataset.size === s));
-  try { localStorage.setItem(SIZE_KEY, s); } catch(_) {}
+  try { localStorage.setItem(SIZE_KEY, s); } catch(_){}
 }
 sizeBtns.forEach(b => b.addEventListener("click", () => setSize(b.dataset.size)));
 let savedSize = "medium";
-try { savedSize = localStorage.getItem(SIZE_KEY) || "medium"; } catch(_) {}
+try { savedSize = localStorage.getItem(SIZE_KEY) || "medium"; } catch(_){}
 setSize(savedSize);
+
+// collapsible navbar (remember state per-browser; hidden entirely if no links)
+const navbar = document.getElementById("navbar");
+const navbarToggle = document.getElementById("navbar-toggle");
+const navbarToggleText = document.getElementById("navbar-toggle-text");
+const navbarLinks = document.getElementById("navbar-links");
+if (navbar && navbarLinks && !navbarLinks.innerHTML.trim()){
+  navbar.remove();   // no chapter links (proverb / root gallery) → don't render navbar
+} else if (navbar){
+  const NAV_KEY = "kgen-navbar-collapsed";
+  let collapsed = true;
+  try { collapsed = localStorage.getItem(NAV_KEY) !== "0"; } catch(_){}
+  function setNav(c){
+    navbar.classList.toggle("collapsed", c);
+    navbarToggle.setAttribute("aria-expanded", String(!c));
+    navbarToggleText.textContent = c ? "展開" : "收合";
+    try { localStorage.setItem(NAV_KEY, c ? "1" : "0"); } catch(_){}
+  }
+  navbarToggle.addEventListener("click", () => setNav(!navbar.classList.contains("collapsed")));
+  setNav(collapsed);
+}
 
 buildCards();
 applyPage(currentPage());
