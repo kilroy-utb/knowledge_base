@@ -30,6 +30,33 @@
   .size-group button:first-child{border-left:0}
   .size-group button:hover:not(.active){background:#f3f4f6}
   .size-group button.active{background:var(--accent);color:#fff}
+  /* back-to-hub link (only rendered when __PARENT_URL__ is set) */
+  .back-slot{max-width:1280px;margin:0 auto;padding:16px 16px 0}
+  .back-slot:empty{display:none}
+  .back{display:inline-flex;align-items:center;gap:6px;color:var(--muted);
+    text-decoration:none;font-size:14px;padding:6px 10px;border:1px solid var(--border);
+    border-radius:6px;background:#fff;white-space:nowrap}
+  .back:hover{color:var(--accent);border-color:var(--accent)}
+  /* collapsible chapter navbar */
+  .navbar{max-width:1280px;margin:0 auto;padding:0 16px 8px}
+  .navbar-inner{border:1px solid var(--border);border-radius:8px;background:#fff;
+    overflow:hidden}
+  .navbar-head{display:flex;align-items:center;gap:10px;padding:10px 14px;
+    background:#f8f9fa;border-bottom:1px solid transparent}
+  .navbar-head .navbar-label{font-size:14px;font-weight:500;color:var(--fg)}
+  .navbar-head .spacer{flex:1}
+  .navbar-toggle{border:0;background:transparent;color:var(--muted);cursor:pointer;
+    font-size:13px;padding:4px 8px;border-radius:4px;font-family:inherit}
+  .navbar-toggle:hover{color:var(--accent);background:#eef2ff}
+  .navbar-chevron{display:inline-block;transition:transform .18s;font-size:11px}
+  .navbar.collapsed .navbar-chevron{transform:rotate(-90deg)}
+  .navbar-links{display:flex;flex-wrap:wrap;gap:8px;padding:12px 14px}
+  .navbar.collapsed .navbar-links{display:none}
+  .navbar-links a{font-size:13px;padding:6px 10px;border:1px solid var(--border);
+    border-radius:999px;text-decoration:none;color:var(--fg);background:#fff;
+    white-space:nowrap}
+  .navbar-links a:hover{border-color:var(--accent);color:var(--accent)}
+  .navbar-links a.current{border-color:var(--accent);background:var(--accent);color:#fff}
   .pager{padding:0 16px 16px;max-width:1280px;margin:0 auto;
     display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
   .pager a,.pager span{padding:6px 12px;border:1px solid var(--border);border-radius:4px;
@@ -86,6 +113,7 @@
 </style>
 </head>
 <body>
+<div class="back-slot" id="back-slot"><a class="back" href="https://kilroy-utb.github.io/knowledge_base/comics/biology/"><span aria-hidden="true">&larr;</span> 返回生物大廳</a></div>
 <header>
   <h1>生殖與遺傳</h1>
   <span class="count" id="count"></span>
@@ -97,6 +125,25 @@
   </div>
   <input type="search" id="q" placeholder="搜尋主題…" autocomplete="off">
 </header>
+<div class="navbar collapsed" id="navbar">
+  <div class="navbar-inner">
+    <div class="navbar-head">
+      <span class="navbar-label">章節導覽</span>
+      <span class="spacer"></span>
+      <button type="button" class="navbar-toggle" id="navbar-toggle"
+              aria-expanded="false" aria-controls="navbar-links">
+        <span class="navbar-chevron">▼</span> <span id="navbar-toggle-text">展開</span>
+      </button>
+    </div>
+    <div class="navbar-links" id="navbar-links"><a class="" href="https://kilroy-utb.github.io/knowledge_base/comics/biology/dna/">DNA 與細胞分裂</a>
+      <a class="" href="https://kilroy-utb.github.io/knowledge_base/comics/biology/cell/">細胞構造與物質進出</a>
+      <a class="" href="https://kilroy-utb.github.io/knowledge_base/comics/biology/energy/">能量代謝</a>
+      <a class="" href="https://kilroy-utb.github.io/knowledge_base/comics/biology/plant_physio/">植物生理</a>
+      <a class="" href="https://kilroy-utb.github.io/knowledge_base/comics/biology/animal_physio/">動物生理</a>
+      <a class="current" href="https://kilroy-utb.github.io/knowledge_base/comics/biology/reproduction/">生殖與遺傳</a>
+      <a class="" href="https://kilroy-utb.github.io/knowledge_base/comics/biology/evolution/">演化與生物分類</a></div>
+  </div>
+</div>
 <nav class="pager" id="pager" aria-label="頁碼導覽"></nav>
 <main>
   <div class="grid" id="grid"></div>
@@ -260,12 +307,33 @@ function setSize(s){
   grid.classList.remove("size-small","size-medium","size-large");
   grid.classList.add("size-" + s);
   sizeBtns.forEach(b => b.classList.toggle("active", b.dataset.size === s));
-  try { localStorage.setItem(SIZE_KEY, s); } catch(_) {}
+  try { localStorage.setItem(SIZE_KEY, s); } catch(_){}
 }
 sizeBtns.forEach(b => b.addEventListener("click", () => setSize(b.dataset.size)));
 let savedSize = "medium";
-try { savedSize = localStorage.getItem(SIZE_KEY) || "medium"; } catch(_) {}
+try { savedSize = localStorage.getItem(SIZE_KEY) || "medium"; } catch(_){}
 setSize(savedSize);
+
+// collapsible navbar (remember state per-browser; hidden entirely if no links)
+const navbar = document.getElementById("navbar");
+const navbarToggle = document.getElementById("navbar-toggle");
+const navbarToggleText = document.getElementById("navbar-toggle-text");
+const navbarLinks = document.getElementById("navbar-links");
+if (navbar && navbarLinks && !navbarLinks.innerHTML.trim()){
+  navbar.remove();   // no chapter links (proverb / root gallery) → don't render navbar
+} else if (navbar){
+  const NAV_KEY = "kgen-navbar-collapsed";
+  let collapsed = true;
+  try { collapsed = localStorage.getItem(NAV_KEY) !== "0"; } catch(_){}
+  function setNav(c){
+    navbar.classList.toggle("collapsed", c);
+    navbarToggle.setAttribute("aria-expanded", String(!c));
+    navbarToggleText.textContent = c ? "展開" : "收合";
+    try { localStorage.setItem(NAV_KEY, c ? "1" : "0"); } catch(_){}
+  }
+  navbarToggle.addEventListener("click", () => setNav(!navbar.classList.contains("collapsed")));
+  setNav(collapsed);
+}
 
 buildCards();
 applyPage(currentPage());
