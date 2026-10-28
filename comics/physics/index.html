@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>物理四格漫畫集 — 章節大廳</title>
+<style>
+  :root{
+    --bg:#fafafa; --fg:#1a1a1a; --muted:#666;
+    --card:#fff; --border:#e5e5e5; --accent:#2563eb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC",
+      "Microsoft JhengHei",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5}
+  main{max-width:760px;margin:0 auto;padding:64px 24px}
+  h1{margin:0 0 8px;font-size:28px;font-weight:600}
+  p.lead{margin:0 0 40px;color:var(--muted);font-size:15px}
+  .grid{display:grid;grid-template-columns:1fr;gap:12px}
+  a.card{display:flex;align-items:center;gap:16px;padding:20px 24px;
+    background:var(--card);border:1px solid var(--border);border-radius:8px;
+    text-decoration:none;color:var(--fg);transition:border-color .15s}
+  a.card:hover{border-color:var(--accent)}
+  a.card .emoji{font-size:32px;line-height:1}
+  a.card .body{flex:1;min-width:0}
+  a.card .title{font-size:17px;font-weight:500;margin-bottom:4px}
+  a.card .desc{color:var(--muted);font-size:13px}
+  a.card .count{color:var(--accent);font-size:12px;margin-top:4px;font-weight:500}
+  a.card .arrow{color:var(--muted);font-size:18px}
+  a.card:hover .arrow{color:var(--accent)}
+  footer{margin-top:48px;color:var(--muted);font-size:12px;text-align:center}
+</style>
+</head>
+<body>
+<main>
+  <h1>物理四格漫畫集</h1>
+  <p class="lead">用漫畫學物理 — 選擇一個章節開始 (16 個主題)。</p>
+
+  <div class="grid">
+    <a class="card" href="https://kilroy-utb.github.io/knowledge_base/comics/physics/optics/">
+      <span class="emoji">🔦</span>
+      <div class="body">
+        <div class="title">光學專題</div>
+        <div class="desc">反射、折射、透鏡成像、色散與物體顏色</div>
+        <div class="count">8 個主題</div>
+      </div>
+      <span class="arrow">›</span>
+    </a>
+    <a class="card" href="https://kilroy-utb.github.io/knowledge_base/comics/physics/electricity/">
+      <span class="emoji">⚡</span>
+      <div class="body">
+        <div class="title">電學與電磁學</div>
+        <div class="desc">靜電、串聯並聯與短路、奧斯特與安培右手定則</div>
+        <div class="count">8 個主題</div>
+      </div>
+      <span class="arrow">›</span>
+    </a>
+  </div>
+
+  <footer>由 k_gen 自動產生 · 2026</footer>
+</main>
+</body>
+</html>
